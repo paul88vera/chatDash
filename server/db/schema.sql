@@ -5,7 +5,8 @@ CREATE TABLE clients (
   first_name varchar(255) NOT NULL,
   last_name varchar(255) NOT NULL,
   email varchar(255) NOT NULL,
-  created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  UNIQUE (clientID)
 );
 
 CREATE TABLE company (
@@ -20,4 +21,3 @@ CREATE TABLE company (
     REFERENCES clients(clientID)
     ON DELETE SET NULL
 );
-

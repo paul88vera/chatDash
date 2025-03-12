@@ -1,4 +1,5 @@
 const express = require("express");
+const cors = require("cors");
 const db = require("./db/connection");
 const apiRoutes = require("./routes/apiRoutes");
 
@@ -6,6 +7,7 @@ const PORT = process.env.PORT || 5500;
 const app = express();
 
 // express middleware
+app.use(cors());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 

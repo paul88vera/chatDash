@@ -5,11 +5,13 @@ import Error from "./pages/Error";
 import Login from "./auth/Login";
 import Account from "./pages/Account";
 import ErrorMessage from "./pages/ErrorMessage";
+import { clientLoader, clientsLoader } from "./loaders";
 
 export const router = createBrowserRouter([
   {
     path: "/",
     element: <RootLayout />,
+    loader: clientsLoader,
     children: [
       {
         errorElement: <ErrorMessage />,
@@ -18,10 +20,13 @@ export const router = createBrowserRouter([
           { path: "login", element: <Login /> },
           {
             path: "account",
-            element: <Account />,
             children: [
-              { index: true, element: <Account /> },
-              { path: "?dashboard=:id", element: <Dashboard /> },
+              { index: true, element: <Account />, loader: clientsLoader },
+              {
+                path: ":id_dashboard",
+                element: <Dashboard />,
+                loader: clientLoader,
+              },
             ],
           },
           { path: "*", element: <Error /> },
