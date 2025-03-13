@@ -14,9 +14,9 @@ export default function Account() {
       <ul>
         {clients.map((client, index) => (
           <li key={index} style={{ listStyle: "none" }}>
-            {client.clientID}
+            {client.uid}
             {" _ "}
-            <a href={`/account/${client.clientID}_dashboard`}>
+            <a href={`/account/${client.uid}/dashboard`}>
               {client.first_name} {client.last_name}
             </a>{" "}
             -- {client.email}

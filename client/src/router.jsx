@@ -23,7 +23,7 @@ export const router = createBrowserRouter([
             children: [
               { index: true, element: <Account />, loader: clientsLoader },
               {
-                path: ":id_dashboard",
+                path: ":id/dashboard",
                 element: <Dashboard />,
                 loader: clientLoader,
               },
