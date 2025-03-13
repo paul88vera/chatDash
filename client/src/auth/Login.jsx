@@ -1,40 +1,66 @@
-import { auth, googleProvider } from "../firebase.js";
+import { auth, googleProvider } from "../firebase";
 import {
-  onAuthStateChanged,
-  getRedirectResult,
   signInWithPopup,
+  onAuthStateChanged,
+  signInWithEmailAndPassword,
 } from "firebase/auth";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const navigate = useNavigate();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   useEffect(() => {
-    getRedirectResult(auth) // Gets auth state after redirection
-      .then((result) => {
-        if (result?.user) {
-          console.log("Redirect login success:", result.user);
-          navigate(`/account/${result.user.uid}/dashboard`);
-        }
-      })
-      .catch((error) => console.error("Login failed:", error));
-
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
+    onAuthStateChanged(auth, (user) => {
       if (user) {
         navigate(`/account/${user.uid}/dashboard`);
       }
     });
-
-    return () => unsubscribe();
   }, [navigate]);
 
-  const signIn = () => signInWithPopup(auth, googleProvider);
+  const signInWithGoogle = async () => {
+    try {
+      await signInWithPopup(auth, googleProvider);
+      navigate(`/account/${auth.currentUser.uid}/dashboard`);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const emailSignIn = async () => {
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+      navigate(`/account/${auth.currentUser.uid}/dashboard`);
+    } catch (error) {
+      console.error("Login failed:", error.code, error.message);
+    }
+  };
 
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center gap-4">
+      <input
+        type="email"
+        placeholder="Email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        className="px-3 py-2 border rounded"
+      />
+      <input
+        type="password"
+        placeholder="Password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+        className="px-3 py-2 border rounded"
+      />
       <button
-        onClick={signIn}
+        onClick={emailSignIn}
+        className="bg-green-500 text-white px-4 py-2 rounded">
+        Sign in with Email
+      </button>
+      <button
+        onClick={signInWithGoogle}
         className="bg-blue-500 text-white px-4 py-2 rounded">
         Sign in with Google
       </button>
