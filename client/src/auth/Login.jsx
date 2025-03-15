@@ -1,8 +1,8 @@
 import { auth, googleProvider } from "../firebase";
 import {
-  signInWithPopup,
   onAuthStateChanged,
   signInWithEmailAndPassword,
+  signInWithPopup,
 } from "firebase/auth";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
