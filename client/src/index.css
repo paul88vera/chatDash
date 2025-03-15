@@ -25,11 +25,6 @@ a:hover {
 body {
   margin: 0;
   padding: 0;
-  display: flex;
-  justify-content: center;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
 }
 
 h1 {
@@ -220,4 +215,48 @@ button:focus-visible {
   margin-left: 0.5rem;
   max-height: 30px;
   width: auto;
+}
+
+.main-container {
+  padding: 2rem;
+}
+
+.main-container .chat-open {
+  padding: 2rem 2rem 2rem 7rem;
+}
+
+#nav-links {
+  display: none;
+  flex-direction: column;
+  align-content: start;
+  justify-content: space-between;
+  width: 0%;
+  padding: 1rem;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: #21245f;
+}
+#nav-link .open {
+  display: flex;
+  width: 10%;
+}
+
+#nav-links {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  height: 87vh;
+}
+
+#nav-links a {
+  color: white;
+}
+
+#nav-links a:hover {
+  color: purple;
+}
+
+#nav-container button:hover {
+  background-color: purple;
 }

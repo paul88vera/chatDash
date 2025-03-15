@@ -1,11 +1,13 @@
 import { createBrowserRouter, Navigate } from "react-router-dom";
 import RootLayout from "./layouts/RootLayout";
-import Dashboard from "./pages/Dashboard";
+import DashboardLayout from "./layouts/DashboardLayout";
 import Error from "./pages/Error";
 import Login from "./auth/Login";
 import Account from "./pages/Account";
 import ErrorMessage from "./pages/ErrorMessage";
 import { clientLoader, clientsLoader } from "./loaders";
+import RequestLayout from "./layouts/RequestLayout";
+import Contact from "./pages/Contact";
 
 export const router = createBrowserRouter([
   {
@@ -24,7 +26,17 @@ export const router = createBrowserRouter([
               { index: true, element: <Account />, loader: clientsLoader },
               {
                 path: ":id/dashboard",
-                element: <Dashboard />,
+                element: <DashboardLayout />,
+                loader: clientLoader,
+              },
+              {
+                path: ":id/request",
+                element: <RequestLayout />,
+                loader: clientLoader,
+              },
+              {
+                path: ":id/contact",
+                element: <Contact />,
                 loader: clientLoader,
               },
             ],
