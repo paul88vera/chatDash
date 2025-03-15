@@ -7,6 +7,7 @@ import Account from "./pages/Account";
 import ErrorMessage from "./pages/ErrorMessage";
 import { clientLoader, clientsLoader } from "./loaders";
 import RequestLayout from "./layouts/RequestLayout";
+import SettingsLayout from "./layouts/SettingsLayout";
 import Contact from "./pages/Contact";
 
 export const router = createBrowserRouter([
@@ -30,8 +31,13 @@ export const router = createBrowserRouter([
                 loader: clientLoader,
               },
               {
-                path: ":id/request",
+                path: ":id/requests",
                 element: <RequestLayout />,
+                loader: clientLoader,
+              },
+              {
+                path: ":id/settings",
+                element: <SettingsLayout />,
                 loader: clientLoader,
               },
               {

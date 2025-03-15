@@ -1,14 +1,14 @@
 import { ScrollRestoration } from "react-router";
 import Nav from "../components/Nav";
-import Request from "../pages/Requests";
+import Settings from "../pages/Settings";
 
-export default function RequestLayout() {
+export default function SettingsLayout() {
   return (
-    <div id="Request-container">
+    <div id="Settings-container">
       <Nav />
       <ScrollRestoration />
       <div className="main-container">
-        <Request />
+        <Settings />
       </div>
     </div>
   );

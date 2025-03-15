@@ -6,6 +6,7 @@ function Contact() {
     <>
       <Nav />
       <div className="main-container">
+        Contact
         <button>
           <Link to="/login">Back To Home</Link>
         </button>
