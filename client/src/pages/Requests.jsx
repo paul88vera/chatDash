@@ -1,3 +1,12 @@
+import { useLoaderData } from "react-router";
+
 export default function Requests() {
-  return <div>Requests</div>;
+  const { request } = useLoaderData();
+
+  return (
+    <div>
+      Requests
+      {request}
+    </div>
+  );
 }

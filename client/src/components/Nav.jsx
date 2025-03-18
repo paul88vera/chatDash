@@ -22,8 +22,6 @@ export default function Nav() {
       <ul className="nav-links">
         <Link to={`/account/${auth.currentUser.uid}/dashboard`}>Dashboard</Link>
         <Link to={`/account/${auth.currentUser.uid}/requests`}>Request</Link>
-        <Link to={`/account/${auth.currentUser.uid}/settings`}>Settings</Link>
-        <Link to={`/account/${auth.currentUser.uid}/contact`}>Contact</Link>
         <Logout />
       </ul>
       {isOpen ? null : (

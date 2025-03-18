@@ -29,7 +29,7 @@ const ChatRoom = ({ close }) => {
     const unsubscribe = onSnapshot(q, (snapshot) => {
       setMessages(
         snapshot.docs.map((doc) => ({
-          id: doc.id, // Corrected id assignment
+          id: doc.id,
           ...doc.data(),
         }))
       );
@@ -60,7 +60,7 @@ const ChatRoom = ({ close }) => {
       </button>
       <div className=" chat">
         {messages.map((msg) => {
-          // Determine if the message was sent or received
+          // Determines if the message was sent or received
           const messageClass =
             msg.uid === auth.currentUser.uid ? "sent" : "received";
 
@@ -70,11 +70,6 @@ const ChatRoom = ({ close }) => {
                 <img src={msg.photoUrl || "/default-avatar.svg"} alt="User" />
                 <span>{msg.text}</span>
               </p>
-              {/* <span className="timestamp">
-                {msg.timestamp?.toDate
-                  ? msg.timestamp.toDate().toLocaleTimeString("en-US")
-                  : "Just now"}
-              </span> */}
             </div>
           );
         })}
