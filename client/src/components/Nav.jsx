@@ -1,14 +1,16 @@
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { getAuth } from "firebase/auth";
 import Logout from "./Logout";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BsChatTextFill } from "react-icons/bs";
 import ChatRoom from "../pages/ChatRoom";
 
 export default function Nav() {
   const auth = getAuth();
+  const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(null);
 
+  // Chat toggle
   const openChat = () => {
     setIsOpen(true);
   };
@@ -16,6 +18,14 @@ export default function Nav() {
   const closeChat = () => {
     setIsOpen(false);
   };
+
+  // auth check
+  useEffect(() => {
+    if (!auth.currentUser) {
+      navigate("/login");
+      return;
+    }
+  }, [auth.currentUser, navigate]);
 
   return (
     <div id="nav-container" className="">

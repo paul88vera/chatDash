@@ -1,14 +1,15 @@
--- Seeds for CLIENTS TABLE
-INSERT INTO clients
-  (first_name, last_name, email)
-VALUES
-  ('James', 'Peach', 'jpeach@gmail.com'),
-  ('James', 'R. Peach', 'jrpeach@gmail.com');
+-- sample data into Company table
+INSERT INTO Company (CompanyID, CompanyName, CompanyOwner, CompanyEmail)
+VALUES 
+(1, 'TechCorp', 'Alice Johnson', 'alice@techcorp.com'),
+(2, 'HealthPlus', 'Bob Smith', 'bob@healthplus.com'),
+(3, 'EduWorld', 'Charlie Brown', 'charlie@eduworld.com');
 
-
--- Seeds for COMPANY TABLE
-INSERT INTO company
-  (company_name, company_owner, company_email, client_id)
-VALUES
-  ('Peaches and Cream', 'James Peach', 'jpeach@gmail.com', 1),
-  ('Peaches NCream', 'James R. Peach', 'jrpeach@gmail.com', 2);
+-- sample data into Clients table
+INSERT INTO Clients (ClientID, FirstName, LastName, ClientEmail, CompanyID, CompanyName)
+VALUES 
+(1, 'David', 'Williams', 'david.williams@email.com', 1, 'Alice Johnson'),
+(2, 'Emma', 'Thompson', 'emma.thompson@email.com', 2, 'HealthPlus'),
+(3, 'Frank', 'Miller', 'frank.miller@email.com', 1, 'Alice Johnson'),
+(4, 'Grace', 'Anderson', 'grace.anderson@email.com', 3, 'EduWorld'),
+(5, 'Henry', 'Wilson', 'henry.wilson@email.com', 2, 'HealthPlus');
