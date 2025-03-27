@@ -1,23 +1,45 @@
-DROP TABLE IF EXISTS clients;
+DROP TABLE IF EXISTS Company;
 
-CREATE TABLE clients (
-  clientID INT AUTO_INCREMENT PRIMARY KEY,
-  first_name varchar(255) NOT NULL,
-  last_name varchar(255) NOT NULL,
-  email varchar(255) NOT NULL,
-  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-  UNIQUE (clientID)
+CREATE TABLE Company (
+  CompanyID INT PRIMARY KEY AUTO_INCREMENT,
+  CompanyName VARCHAR(255) NOT NULL,
+  CompanyOwner VARCHAR(255) NOT NULL,
+  CompanyEmail VARCHAR(255) NOT NULL,
+  UNIQUE (CompanyID),
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE company (
-  companyID INT AUTO_INCREMENT PRIMARY KEY,
-  company_name varchar(255) NOT NULL,
-  company_owner varchar(255) NOT NULL,
-  company_email varchar(255) NOT NULL,
-  client_id INT,
+CREATE TABLE Clients (
+  ClientID INT PRIMARY KEY AUTO_INCREMENT,
+  FirstName VARCHAR(255) NOT NULL,
+  LastName VARCHAR(255) NOT NULL,
+  ClientEmail VARCHAR(255) NOT NULL,
+  CompanyID INT NOT NULL,
+  CompanyName VARCHAR(255) NOT NULL,
+  UNIQUE (ClientID),
   created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-  CONSTRAINT fk_client
-    FOREIGN KEY (client_id)
-    REFERENCES clients(clientID)
-    ON DELETE SET NULL
+  CONSTRAINT fk_ClientCompany
+  FOREIGN KEY (CompanyID)
+  REFERENCES Company(CompanyID)
+  ON DELETE CASCADE
+);
+
+CREATE TABLE Requests (
+  RequestID INT PRIMARY KEY AUTO_INCREMENT,
+  CreatedDate DATETIME DEFAULT CURRENT_TIMESTAMP,
+  ClientID INT NOT NULL,
+  FirstName VARCHAR(255) NOT NULL,
+  LastName VARCHAR(255) NOT NULL,
+  CompanyID INT NOT NULL,
+  CompanyName VARCHAR(255) NOT NULL,
+  Details VARCHAR(255) NOT NULL,
+  UNIQUE (RequestID),
+  CONSTRAINT fk_ClientRequests
+  FOREIGN KEY (ClientID)
+  REFERENCES Clients(ClientID)
+  ON DELETE CASCADE,
+  CONSTRAINT fk_CompanyRequests
+  FOREIGN KEY (CompanyID)
+  REFERENCES Company(CompanyID)
+  ON DELETE CASCADE
 );

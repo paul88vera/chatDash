@@ -12,12 +12,14 @@ export const fetchClients = async (options) => {
   }
 };
 
+
+
 // @route    GET /clients/:id
 // @desc     Fetch single clients
 // @access   Private
 export const fetchClientById = async ({ params }) => {
   try {
-    return baseApi.get("/clients/:id", params).then((res) => res.data);
+    return baseApi.get(`/clients/:id`, params).then((res) => res.data);
   } catch (error) {
     console.error("Error fetching client:", error);
     return []; // Return empty array instead of crashing

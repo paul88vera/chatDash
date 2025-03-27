@@ -5,16 +5,13 @@ import Error from "./pages/Error";
 import Login from "./auth/Login";
 import Account from "./pages/Account";
 import ErrorMessage from "./pages/ErrorMessage";
-import { clientLoader, clientsLoader } from "./loaders";
+import { requestLoader } from "./loaders";
 import RequestLayout from "./layouts/RequestLayout";
-import SettingsLayout from "./layouts/SettingsLayout";
-import Contact from "./pages/Contact";
 
 export const router = createBrowserRouter([
   {
     path: "/",
     element: <RootLayout />,
-    loader: clientsLoader,
     children: [
       {
         errorElement: <ErrorMessage />,
@@ -24,26 +21,15 @@ export const router = createBrowserRouter([
           {
             path: "account",
             children: [
-              { index: true, element: <Account />, loader: clientsLoader },
+              { index: true, element: <Account /> },
               {
                 path: ":id/dashboard",
                 element: <DashboardLayout />,
-                loader: clientLoader,
               },
               {
                 path: ":id/requests",
                 element: <RequestLayout />,
-                loader: clientLoader,
-              },
-              {
-                path: ":id/settings",
-                element: <SettingsLayout />,
-                loader: clientLoader,
-              },
-              {
-                path: ":id/contact",
-                element: <Contact />,
-                loader: clientLoader,
+                loader: requestLoader,
               },
             ],
           },
