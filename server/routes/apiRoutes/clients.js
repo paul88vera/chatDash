@@ -10,7 +10,7 @@ router.get("/", (req, res) => {
   db.query(query, (err, results) => {
     if (err) {
       console.error(err);
-      res.status(500).send("Server error");
+      res.status(500).send("Server error on Clients");
     } else {
       res.json(results);
     }
