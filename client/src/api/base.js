@@ -1,5 +1,5 @@
 import axios from "axios";
 
 export const baseApi = axios.create({
-  baseURL: import.meta.env.VITE_PORT,
+  baseURL: "http://localhost:5500/api",
 });

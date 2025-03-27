@@ -5,7 +5,10 @@ CREATE TABLE Company (
   CompanyName VARCHAR(255) NOT NULL,
   CompanyOwner VARCHAR(255) NOT NULL,
   CompanyEmail VARCHAR(255) NOT NULL,
+  AMName VARCHAR(255) NOT NULL,
   UNIQUE (CompanyID),
+  UNIQUE (CompanyName),
+  UNIQUE (CompanyEmail),
   created_at DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -16,7 +19,9 @@ CREATE TABLE Clients (
   ClientEmail VARCHAR(255) NOT NULL,
   CompanyID INT NOT NULL,
   CompanyName VARCHAR(255) NOT NULL,
+  AMName VARCHAR(255) NOT NULL,
   UNIQUE (ClientID),
+  UNIQUE (ClientEmail),
   created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
   CONSTRAINT fk_ClientCompany
   FOREIGN KEY (CompanyID)
@@ -32,6 +37,7 @@ CREATE TABLE Requests (
   LastName VARCHAR(255) NOT NULL,
   CompanyID INT NOT NULL,
   CompanyName VARCHAR(255) NOT NULL,
+  AMName VARCHAR(255) NOT NULL,
   Details VARCHAR(255) NOT NULL,
   UNIQUE (RequestID),
   CONSTRAINT fk_ClientRequests

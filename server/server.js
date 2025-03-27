@@ -3,7 +3,7 @@ const cors = require("cors");
 const db = require("./db/connection");
 const apiRoutes = require("./routes/apiRoutes");
 
-const PORT = process.env.PORT || 5500;
+const PORT = 5500;
 const app = express();
 
 // express middleware
