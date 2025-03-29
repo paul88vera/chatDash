@@ -1,14 +1,19 @@
-INSERT INTO Company (CompanyName, CompanyOwner, CompanyEmail) VALUES
-('Tech Solutions', 'Alice Johnson', 'alice@techsolutions.com'),
-('Global Innovations', 'Bob Smith', 'bob@globalinnovations.com'),
-('NextGen Software', 'Charlie Brown', 'charlie@nextgensoftware.com');
+-- Insert data into Company table
+INSERT INTO Company (CompanyName, CompanyOwner, CompanyEmail, AMName) VALUES
+('Alpha Tech', 'John Carter', 'john@alphatech.com', 'Lisa Brown'),
+('Beta Solutions', 'Mary Johnson', 'mary@betasolutions.com', 'Tom Smith'),
+('Gamma Innovations', 'Robert Wilson', 'robert@gammainnovations.com', 'Emma Davis');
 
-INSERT INTO Clients (FirstName, LastName, ClientEmail, CompanyID, CompanyName) VALUES
-('John', 'Doe', 'john.doe@example.com', 1, 'Tech Solutions'),
-('Jane', 'Smith', 'jane.smith@example.com', 2, 'Global Innovations'),
-('Emily', 'Davis', 'emily.davis@example.com', 3, 'NextGen Software');
+-- Insert data into Clients table
+INSERT INTO Clients (AMName, FirstName, LastName, ClientEmail, CompanyID, CompanyName) VALUES
+('Lisa Brown', 'Emily', 'Clark', 'emily@client.com', 1, 'Alpha Tech'),
+('Tom Smith', 'Daniel', 'Martinez', 'daniel@client.com', 2, 'Beta Solutions'),
+('Emma Davis', 'Sophia', 'Lee', 'sophia@client.com', 3, 'Gamma Innovations'),
+('Lisa Brown', 'James', 'Wilson', 'james@client.com', 1, 'Alpha Tech');
 
-INSERT INTO Requests (Details, ClientID, FirstName, LastName, CompanyID, CompanyName) VALUES
-('Need assistance with software update.', 1, 'John', 'Doe', 1, 'Tech Solutions'),
-('Looking for a new web development team.', 2, 'Jane', 'Smith', 2, 'Global Innovations'),
-('Requesting a cybersecurity audit.', 3, 'Emily', 'Davis', 3, 'NextGen Software');
+-- Insert data into Requests table
+INSERT INTO Requests (ClientID, AMName, FirstName, LastName, CompanyID, CompanyName, Details) VALUES
+(1, 'Lisa Brown', 'Emily', 'Clark', 1, 'Alpha Tech', 'Website redesign inquiry.'),
+(2, 'Tom Smith', 'Daniel', 'Martinez', 2, 'Beta Solutions', 'Server maintenance request.'),
+(3, 'Emma Davis', 'Sophia', 'Lee', 3, 'Gamma Innovations', 'Custom software development inquiry.'),
+(4, 'Lisa Brown', 'James', 'Wilson', 1, 'Alpha Tech', 'Need help with cloud migration.');

@@ -1,11 +1,24 @@
 import { useLoaderData } from "react-router";
+import { MdNoteAdd } from "react-icons/md";
+import { useState } from "react";
+import RequestForm from "../components/RequestForm";
 
 export default function Requests() {
   const request = useLoaderData();
+  const [modal, setModal] = useState();
+
+  const toggleRequestForm = () => {
+    setModal((current) => !current);
+    console.log("it was clicked.");
+  };
 
   return (
     <div>
       <h1>Pending Requests</h1>
+      <button onClick={toggleRequestForm}>
+        <MdNoteAdd />
+      </button>
+      {modal ? <RequestForm close={toggleRequestForm} /> : null}
       <div className="request_table">
         <div
           style={{
@@ -30,8 +43,9 @@ export default function Requests() {
                 style={{
                   display: "flex",
                   flexDirection: "row",
-                  justifyContent: "space-between",
-                  alignItems: "center",
+                  justifyContent: "start",
+                  width: "100%",
+                  alignItems: "start",
                   flexWrap: "nowrap",
                   gap: "4rem",
                 }}>
@@ -40,8 +54,7 @@ export default function Requests() {
                 </span>
                 <span className="taskId">{item.RequestID}</span>
                 <span className="taskDetails">{item.Details}</span>
-                {/* TODO: add AMName to schema: 
-                <span className="amInfo">{request[item].AMName}fda</span> */}
+                <span className="amInfo">{item.AMName}</span>
                 <span className="estTime">estimate</span>
               </div>
             );

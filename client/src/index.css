@@ -260,3 +260,28 @@ button:focus-visible {
 #nav-container button:hover {
   background-color: purple;
 }
+
+#requestContainer {
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+#requestForm_Container {
+  height: 95svh;
+  width: 100svw;
+  background-color: #191919b4;
+  color: white;
+  padding: 2rem;
+}
+
+#requestForm_form {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  background-color: #21245f;
+  width: 91%;
+  height: 90%;
+  border-radius: 10px;
+  padding: 2rem;
+}
