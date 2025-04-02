@@ -5,8 +5,7 @@ import Error from "./pages/Error";
 import Login from "./auth/Login";
 import Account from "./pages/Account";
 import ErrorMessage from "./pages/ErrorMessage";
-import { requestsLoader } from "./loaders.js";
-import RequestLayout from "./layouts/RequestLayout";
+import { newRequestForm } from "./pages/Requests.jsx";
 
 export const router = createBrowserRouter([
   {
@@ -28,8 +27,7 @@ export const router = createBrowserRouter([
               },
               {
                 path: ":id/requests",
-                element: <RequestLayout />,
-                loader: requestsLoader,
+                ...newRequestForm,
               },
             ],
           },

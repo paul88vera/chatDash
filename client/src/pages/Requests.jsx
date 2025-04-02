@@ -1,32 +1,44 @@
-import { useLoaderData } from "react-router";
+import { useActionData, useLoaderData, useNavigation } from "react-router-dom";
 import { MdNoteAdd } from "react-icons/md";
 import { useState } from "react";
 import RequestForm from "../components/RequestForm";
+import { loader, action } from "../requestHandlers";
+import Nav from "../components/Nav";
 
 export default function Requests() {
   const request = useLoaderData();
-  const [modal, setModal] = useState();
+  const [modal, setModal] = useState(false);
+  const errors = useActionData();
+  const { state } = useNavigation();
+  const isSubmitting = state === "submitting";
 
   const toggleRequestForm = () => {
     setModal((current) => !current);
-    console.log("it was clicked.");
   };
 
   return (
     <div>
+      <Nav />
       <h1>Pending Requests</h1>
       <button onClick={toggleRequestForm}>
         <MdNoteAdd />
       </button>
-      {modal ? <RequestForm close={toggleRequestForm} /> : null}
+      {modal ? (
+        <RequestForm
+          close={toggleRequestForm}
+          isSubmitting={isSubmitting}
+          errors={errors}
+        />
+      ) : null}
       <div className="request_table">
         <div
           style={{
             display: "flex",
             flexDirection: "row",
             justifyContent: "space-between",
-            alignItems: "center",
+            alignItems: "start",
             flexWrap: "nowrap",
+            textAlign: "left",
             gap: "4rem",
           }}>
           <span className="subDate">Submission Date</span>
@@ -43,10 +55,11 @@ export default function Requests() {
                 style={{
                   display: "flex",
                   flexDirection: "row",
-                  justifyContent: "start",
+                  justifyContent: "space-between",
                   width: "100%",
                   alignItems: "start",
                   flexWrap: "nowrap",
+                  textAlign: "left",
                   gap: "4rem",
                 }}>
                 <span className="subDate">
@@ -60,33 +73,14 @@ export default function Requests() {
             );
           })}
         </div>
-        <div>
-          <div>
-            <span>© copyright</span>
-          </div>
-        </div>
       </div>
     </div>
   );
 }
 
-/**
- *
- * Submission Date
- * Task ID
- * Task Details
- * AM Contact Info
- * Estimated Time
- *
- */
-// function RequestContainer({ ...item, key }) {
-//   return (
-//     <div key={key}>
-//       <span className="subDate">{item.sub}</span>
-//       <span className="taskId">{item.id}</span>
-//       <span className="taskDetails">{item.details}</span>
-//       <span className="amInfo">{item.am}</span>
-//       <span className="estTime">{item.est}</span>
-//     </div>
-//   );
-// }
+// eslint-disable-next-line react-refresh/only-export-components
+export const newRequestForm = {
+  loader,
+  action,
+  element: <Requests />,
+};

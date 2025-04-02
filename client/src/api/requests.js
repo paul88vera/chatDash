@@ -1,40 +1,25 @@
 import { baseApi } from "./base";
 
 // @route    FETCH /requests/
-// @desc     Add a request
+// @desc     Get all requests
 // @access   Private
-export const fetchRequests = async (options) => {
-  try {
-    return baseApi.get(`/requests`, options).then((res) => res.data);
-  } catch (error) {
-    console.error("Error getting requests:", error);
-    return []; // Return empty array instead of crashing
-  }
-};
+export function getRequests(options) {
+  return baseApi.get(`/requests`, options).then((res) => res.data);
+}
 
 // @route    FETCH /requests/:id
 // @desc     Get a request by id
 // @access   Private
-export const fetchRequest = async (id, options) => {
-  try {
-    return baseApi.get(`/requests/${id}`, options).then((res) => res.data);
-  } catch (error) {
-    console.error("Error getting request by id:", error);
-    return []; // Return empty array instead of crashing
-  }
-};
+export function getRequest(id, options) {
+  return baseApi.get(`/requests/${id}`, options).then((res) => res.data);
+}
 
 // @route    POST /requests/
 // @desc     Add a request
 // @access   Private
-export const addRequest = async (id, { params }) => {
-  try {
-    return baseApi.post(`/requests/${id}`, params).then((res) => res.data);
-  } catch (error) {
-    console.error("Error adding a request:", error);
-    return []; // Return empty array instead of crashing
-  }
-};
+export function addRequest(data, options) {
+  return baseApi.post(`/requests`, data, options).then((res) => res.data);
+}
 
 // @route    PUT /requests/:id
 // @desc     Edit request by id
