@@ -1,13 +1,28 @@
 import { getAuth } from "firebase/auth";
-// import { postFormValidator } from "./components/RequestForm";
-import { addRequest, getRequests } from "./api/requests";
+import { addRequest, getRequest, getRequests } from "./api/requests";
+import { getClientById } from "./api/client";
 import { redirect } from "react-router";
 
 // requestHandlers.js
-export function loader({ request: { signal } }) {
-  return getRequests({ signal });
+// For Requests Page
+export async function RequestLoader({ request: { signal } }) {
+  return (await getRequests({ signal })) || [];
 }
 
+// For Request Item Page
+export async function RequestSingleLoader({
+  request: { signal },
+  params: { id },
+}) {
+  return (await getRequest(id, { signal })) || [];
+}
+
+// For Navigation Auth Check
+export async function ClientLoader({ request: { signal }, params: { id } }) {
+  return (await getClientById(id, { signal })) || [];
+}
+
+// To receive form data for Request Item
 export async function action({ request }) {
   const auth = getAuth();
   const formData = await request.formData();
@@ -36,7 +51,7 @@ export async function action({ request }) {
     { signal: request.signal }
   );
 
-  return redirect(`/account/${auth.currentUser.id}/requests/${post.id}`);
+  return redirect(`/account/${auth.currentUser.uid}/requests/${post.id}`);
 }
 
 export function postFormValidator({
@@ -50,22 +65,22 @@ export function postFormValidator({
   const errors = {};
 
   if (details === "") {
-    errors.details = "Required";
+    errors.details = "*Required";
   }
   if (clientID === "") {
-    errors.clientID = "Required";
+    errors.clientID = "*Required";
   }
   if (firstName === "") {
-    errors.firstName = "Required";
+    errors.firstName = "*Required";
   }
   if (lastName === "") {
-    errors.lastName = "Required";
+    errors.lastName = "*Required";
   }
   if (companyID === "") {
-    errors.companyID = "Required";
+    errors.companyID = "*Required";
   }
   if (companyName === "") {
-    errors.companyName = "Required";
+    errors.companyName = "*Required";
   }
 
   return errors;

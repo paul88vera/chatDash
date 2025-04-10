@@ -5,7 +5,13 @@ import Error from "./pages/Error";
 import Login from "./auth/Login";
 import Account from "./pages/Account";
 import ErrorMessage from "./pages/ErrorMessage";
-import { newRequestForm } from "./pages/Requests.jsx";
+import Requests from "./pages/Requests.jsx";
+import {
+  action,
+  RequestLoader,
+  RequestSingleLoader,
+} from "./requestHandlers.js";
+import RequestItem from "./pages/RequestItem.jsx";
 
 export const router = createBrowserRouter([
   {
@@ -27,7 +33,15 @@ export const router = createBrowserRouter([
               },
               {
                 path: ":id/requests",
-                ...newRequestForm,
+                element: <Requests />,
+                loader: RequestLoader,
+                action: action,
+              },
+              {
+                path: ":id/requests/:id",
+                element: <RequestItem />,
+                loader: RequestSingleLoader,
+                action: action,
               },
             ],
           },
