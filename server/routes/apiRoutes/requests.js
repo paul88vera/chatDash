@@ -33,22 +33,23 @@ router.get("/:id", (req, res) => {
 
 // POST a new request
 router.post("/", (req, res) => {
-  const { details, clientId, am, first, last, companyId, companyName, id } =
-    req.body;
+  const { details, am, clientID } = req.body;
+
+  const clientIDNum = parseInt(clientID, 10);
+
   const query =
-    "INSERT INTO Requests (Details, ClientID, AMName, FirstName, LastName, CompanyID, CompanyName) VALUES (?, ?, ?, ?, ?, ?)";
-  db.query(
-    query,
-    [details, clientId, am, first, last, companyId, companyName, id],
-    (err, result) => {
-      if (err) {
-        console.error(err);
-        res.status(500).send("Server error on request");
-      } else {
-        res.status(201).send("Request added");
-      }
+    "INSERT INTO Requests (Details, AMName, ClientID) VALUES (?, ?, ?)";
+  db.query(query, [details, am, clientIDNum], (err, result) => {
+    if (err) {
+      console.error(err);
+      res.status(500).send("Server error on request");
+    } else {
+      res.status(201).json({
+        message: "Request added",
+        id: result.insertId, // ← this is the important part
+      });
     }
-  );
+  });
 });
 
 // PUT (update) a request

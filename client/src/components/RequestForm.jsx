@@ -2,7 +2,7 @@ import { IoIosCloseCircle } from "react-icons/io";
 import { createPortal } from "react-dom";
 import { Form, useLoaderData } from "react-router";
 import FormGroup from "./FormGroup";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export default function RequestForm({
   close,
@@ -10,16 +10,21 @@ export default function RequestForm({
   errors = {},
   // defaultValues = {},
 }) {
-  const client = useLoaderData();
-  const data = client.client;
-
-  // const filteredData = data
+  const { request, client } = useLoaderData();
+  const clientData = client[0];
+  const requestData = request[0];
+  const [cid, setCid] = useState(
+    parseInt(clientData?.ClientID, 10) ?? parseInt("", 10)
+  );
+  const [compId, setCompId] = useState(
+    parseInt(clientData?.CompanyID, 10) ?? parseInt("", 10)
+  );
 
   useEffect(() => {
-    console.log(data);
-  }, [data]);
-
-  console.log(data)
+    if (!clientData || !requestData) {
+      console.log("no data");
+    }
+  }, [clientData, requestData]);
 
   return createPortal(
     <div
@@ -28,7 +33,7 @@ export default function RequestForm({
       <Form
         id="requestForm_form"
         method="post"
-        className="flex flex-col gap-2 justify-between p-8 bg-purple-950 h-9/12 w-full md:w-6/12 rounded-lg">
+        className="flex flex-col gap-2 justify-between p-8 bg-purple-950 w-full md:w-9/12 rounded-lg">
         <div>
           <button type="button" onClick={close} className="cursor-pointer">
             <IoIosCloseCircle className="hover:fill-slate-400 text-2xl" />
@@ -37,11 +42,11 @@ export default function RequestForm({
         <h2 className="font-bold text-5xl">Enter Your Edit Details</h2>
         <div className="flex flex-row gap-2 flex-wrap">
           <FormGroup
-            classStyle={"flex flex-row gap-4 w-full pb-4"}
+            classStyle={"flex flex-row gap-4 w-full pb-4 "}
             errorMessage={[
-              errors.data.AMName,
-              errors.data.CompanyID,
-              errors.data.CompanyName,
+              errors.AMName,
+              errors.CompanyID,
+              errors.CompanyName,
             ]}>
             <label htmlFor="AMName">Account Manager: </label>
             <input
@@ -49,40 +54,65 @@ export default function RequestForm({
               name="AMName"
               id="AMName"
               className="border-0 rounded-md w-1/5 border-slate-900"
-              defaultValue={data.AMName}
+              value={requestData.AMName}
+              onChange={(e) => {
+                e.target.value;
+              }}
             />
-            <label htmlFor="CompanyID" className="z-0 absolute opacity-0">
+            <label htmlFor="ClientID" className=" ">
+              ClientID:{" "}
+            </label>
+            <input
+              type="number"
+              name="ClientID"
+              id="ClientID"
+              className="border-0 rounded-md w-1/5 border-slate-900  "
+              value={cid}
+              onChange={(e) => {
+                setCid(e.target.value);
+              }}
+            />
+            <label htmlFor="CompanyID" className=" ">
               Company ID:{" "}
             </label>
             <input
-              type="text"
+              type="number"
               name="CompanyID"
               id="CompanyID"
-              className="border-0 rounded-md w-1/5 border-slate-900 z-0 absolute opacity-0"
-              defaultValue={data.CompanyID}
+              className="border-0 rounded-md w-1/5 border-slate-900  "
+              value={compId}
+              onChange={(e) => {
+                setCompId(e.target.value);
+              }}
             />
-            <label htmlFor="CompanyName" className="z-0 absolute opacity-0">
+            {/* <label htmlFor="CompanyName" className="hidden ">
               Company Name:{" "}
             </label>
             <input
               type="text"
               name="CompanyName"
               id="CompanyName"
-              className="border-0 rounded-md w-1/5 border-slate-900 z-0 absolute opacity-0"
-              defaultValue={data.CompanyName}
-            />
+              className="border-0 rounded-md w-1/5 border-slate-900  hidden"
+              value={requestData.CompanyName}
+              onChange={(e) => {
+                e.target.value;
+              }}
+            /> */}
           </FormGroup>
-          <FormGroup
-            errorMessage={[errors.data.FirstName, errors.data.LastName]}
-            classStyle={"flex flex-row gap-4 w-full"}>
+          {/* <FormGroup
+            errorMessage={[errors.FirstName, errors.LastName]}
+            classStyle={"flex flex-row gap-4 w-full hidden"}>
             <label htmlFor="FirstName">
               First Name:
               <input
                 type="text"
                 name="FirstName"
                 id="FirstName"
-                className="border-1 rounded-md w-full border-slate-900"
-                defaultValue={data.FirstName}
+                className=""
+                value={requestData.FirstName}
+                onChange={(e) => {
+                  e.target.value;
+                }}
               />
             </label>
             <label htmlFor="LastName">
@@ -91,12 +121,15 @@ export default function RequestForm({
                 type="text"
                 name="LastName"
                 id="LastName"
-                className="border-1 rounded-md w-full border-slate-900"
-                defaultValue={data.LastName}
+                className=""
+                onChange={(e) => {
+                  e.target.value;
+                }}
+                value={requestData.LastName}
               />
             </label>
-          </FormGroup>
-          <FormGroup errorMessage={errors.data.details}>
+          </FormGroup> */}
+          <FormGroup errorMessage={errors.details}>
             <div className="flex flex-col gap-2">
               <label>Details: </label>
               <textarea

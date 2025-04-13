@@ -12,8 +12,8 @@ INSERT INTO Clients (AMName, FirstName, LastName, ClientEmail, CompanyID, Compan
 ('Lisa Brown', 'James', 'Wilson', 'james@client.com', 1, 'Alpha Tech');
 
 -- Insert data into Requests table
-INSERT INTO Requests (ClientID, AMName, FirstName, LastName, CompanyID, CompanyName, Details) VALUES
-(1, 'Lisa Brown', 'Emily', 'Clark', 1, 'Alpha Tech', 'Website redesign inquiry.'),
-(2, 'Tom Smith', 'Daniel', 'Martinez', 2, 'Beta Solutions', 'Server maintenance request.'),
-(3, 'Emma Davis', 'Sophia', 'Lee', 3, 'Gamma Innovations', 'Custom software development inquiry.'),
-(4, 'Lisa Brown', 'James', 'Wilson', 1, 'Alpha Tech', 'Need help with cloud migration.');
+INSERT INTO Requests (ClientID, AMName, Details) VALUES
+(1, 'Lisa Brown', 'Website redesign inquiry.'),
+(2, 'Tom Smith','Server maintenance request.'),
+(3, 'Emma Davis', 'Custom software development inquiry.'),
+(1, 'Lisa Brown', 'Need help with cloud migration.');

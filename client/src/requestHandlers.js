@@ -34,19 +34,21 @@ export async function action({ request }) {
   const auth = getAuth();
   const formData = await request.formData();
   const details = formData.get("Details");
-  const clientID = formData.get("ClientID");
-  const firstName = formData.get("FirstName");
-  const lastName = formData.get("LastName");
-  const companyID = formData.get("CompanyID");
-  const companyName = formData.get("CompanyName");
+  const clientID = parseInt(formData.get("ClientID"), 10);
+  const am = formData.get("AMName");
+  // const firstName = formData.get("FirstName");
+  // const lastName = formData.get("LastName");
+  // const companyID = parseInt(formData.get("CompanyID"), 10);
+  // const companyName = formData.get("CompanyName");
 
   const errors = postFormValidator({
     details,
     clientID,
-    firstName,
-    lastName,
-    companyID,
-    companyName,
+    am,
+    // companyID,
+    // firstName,
+    // lastName,
+    // companyName,
   });
 
   if (Object.keys(errors).length > 0) {
@@ -54,20 +56,32 @@ export async function action({ request }) {
   }
 
   const post = await addRequest(
-    { details, clientID, firstName, lastName, companyID, companyName },
+    {
+      details,
+      clientID: parseInt(clientID, 10),
+      am,
+      // companyID: parseInt(companyID, 10),
+      // firstName,
+      // lastName,
+      // companyName,
+    },
     { signal: request.signal }
   );
 
-  return redirect(`/account/${auth.currentUser.uid}/requests/${post.id}`);
+  console.log("post: ", post);
+  return redirect(
+    `/account/${auth.currentUser.uid}/requests/${post.id}`
+  );
 }
 
 export function postFormValidator({
   details,
   clientID,
-  firstName,
-  lastName,
-  companyID,
-  companyName,
+  am,
+  // companyID,
+  // firstName,
+  // lastName,
+  // companyName,
 }) {
   const errors = {};
 
@@ -77,18 +91,28 @@ export function postFormValidator({
   if (clientID === "") {
     errors.clientID = "*Required";
   }
-  if (firstName === "") {
-    errors.firstName = "*Required";
+  if (!clientID || isNaN(parseInt(clientID))) {
+    errors.clientID = "*Required and must be a number";
   }
-  if (lastName === "") {
-    errors.lastName = "*Required";
+
+  if (am === "") {
+    errors.am = "*Required";
   }
-  if (companyID === "") {
-    errors.companyID = "*Required";
-  }
-  if (companyName === "") {
-    errors.companyName = "*Required";
-  }
+  // if (firstName === "") {
+  //   errors.firstName = "*Required";
+  // }
+  // if (lastName === "") {
+  //   errors.lastName = "*Required";
+  // }
+  // if (companyName === "") {
+  //   errors.companyName = "*Required";
+  // }
+  // if (companyID === "") {
+  //   errors.companyID = "*Required";
+  // }
+  // if (!companyID || isNaN(parseInt(companyID))) {
+  //   errors.companyID = "*Required and must be a number";
+  // }
 
   return errors;
 }
