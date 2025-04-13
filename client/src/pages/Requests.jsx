@@ -10,7 +10,7 @@ import RequestForm from "../components/RequestForm";
 import { getAuth } from "firebase/auth";
 
 export default function Requests() {
-  const request = useLoaderData();
+  const { request, client } = useLoaderData();
   const [modal, setModal] = useState(false);
   const errors = useActionData();
   const { state } = useNavigation();
@@ -30,19 +30,23 @@ export default function Requests() {
   return (
     <div>
       <div className="p-4 md:p-8">
-        <h1>Pending Requests</h1>
-        <button onClick={toggleRequestForm}>
-          <MdNoteAdd />
-        </button>
+        <div className="flex flex-row flew-nowrap justify-between pb-4">
+          <h1>Pending Requests</h1>
+          <button onClick={toggleRequestForm}>
+            <MdNoteAdd className="cursor-pointer text-2xl hover:fill-slate-400 transition ease-in-out" />
+          </button>
+        </div>
         {modal ? (
           <RequestForm
             close={toggleRequestForm}
             isSubmitting={isSubmitting}
             errors={errors}
+            {...client}
+            {...request}
           />
         ) : null}
         <div className="request_table">
-          <div className="flex flex-row justify-between bg-purple-950 py-2 px-4 rounded-tl-md rounded-tr-md gap-2">
+          <div className="flex flex-row justify-between bg-purple-950 py-2 px-4 rounded-tl-md rounded-md gap-2">
             <span className="subDate w-[10%]">Sub Date</span>
             <span className="taskId  w-[10%] text-center">Entry ID</span>
             <span className="taskDetails w-[60%]">Task Details</span>
@@ -55,7 +59,7 @@ export default function Requests() {
                 <Link
                   to={`/account/${auth.currentUser.uid}/requests/${item.RequestID}`}
                   key={index}
-                  className="flex flex-row justify-between bg-slate-850 py-2 px-4 gap-2 bg-slate-800">
+                  className="flex flex-row justify-between bg-slate-850 py-2 px-4 gap-2 bg-slate-800 hover:bg-slate-900 border-b-1 my-2 rounded-md border-slate-400">
                   <span className="subDate w-[10%]">
                     {new Date(item.CreatedDate).toLocaleString(
                       "en-US",

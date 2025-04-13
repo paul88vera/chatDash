@@ -1,6 +1,6 @@
 import { getAuth } from "firebase/auth";
 import { addRequest, getRequest, getRequests } from "./api/requests";
-import { getClientById } from "./api/client";
+import { getClientById, getClients } from "./api/client";
 import { redirect } from "react-router";
 
 // requestHandlers.js
@@ -20,6 +20,13 @@ export async function RequestSingleLoader({
 // For Navigation Auth Check
 export async function ClientLoader({ request: { signal }, params: { id } }) {
   return (await getClientById(id, { signal })) || [];
+}
+
+// Client & Request Loader
+export async function AllLoader({ request: { signal } }) {
+  const client = (await getClients({ signal })) || [];
+  const request = (await getRequests({ signal })) || [];
+  return { client, request };
 }
 
 // To receive form data for Request Item

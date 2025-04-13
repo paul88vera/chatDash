@@ -66,7 +66,7 @@ export default function Nav() {
       )}
       {isOpen ? null : (
         <button
-          className="chatbox-widget-btn bg-transparent"
+          className="flex flex-col align-middle justify-center fixed bottom-4 right-4 p-4 rounded-full bg-purple-900 hover:bg-purple-950 hover:scale-90 transition ease-in-out cursor-pointer"
           onClick={openChat}>
           <BsChatTextFill style={{ fontSize: "1.5rem" }} />
         </button>

@@ -8,7 +8,8 @@ import ErrorMessage from "./pages/ErrorMessage";
 import Requests from "./pages/Requests.jsx";
 import {
   action,
-  RequestLoader,
+  AllLoader,
+  // RequestLoader,
   RequestSingleLoader,
 } from "./requestHandlers.js";
 import RequestItem from "./pages/RequestItem.jsx";
@@ -34,7 +35,7 @@ export const router = createBrowserRouter([
               {
                 path: ":id/requests",
                 element: <Requests />,
-                loader: RequestLoader,
+                loader: AllLoader,
                 action: action,
               },
               {

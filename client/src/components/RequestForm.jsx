@@ -1,25 +1,37 @@
 import { IoIosCloseCircle } from "react-icons/io";
 import { createPortal } from "react-dom";
-import { Form } from "react-router";
+import { Form, useLoaderData } from "react-router";
 import FormGroup from "./FormGroup";
+import { useEffect } from "react";
 
 export default function RequestForm({
   close,
   isSubmitting,
   errors = {},
-  defaultValues = {},
+  // defaultValues = {},
 }) {
+  const client = useLoaderData();
+  const data = client.client;
+
+  // const filteredData = data
+
+  useEffect(() => {
+    console.log(data);
+  }, [data]);
+
+  console.log(data)
+
   return createPortal(
     <div
       id="requestForm_Container"
-      className="fixed bg-slate-950 h-full w-full top-0 left-0 flex flex-col justify-center align-middle items-center">
+      className="fixed bg-[#020618af] h-full w-full top-0 left-0 flex flex-col justify-center align-middle items-center p-4 md:p-8">
       <Form
         id="requestForm_form"
         method="post"
-        className="flex flex-col gap-2 justify-between p-4 bg-purple-950 h-9/12 w-6/12 rounded-lg">
+        className="flex flex-col gap-2 justify-between p-8 bg-purple-950 h-9/12 w-full md:w-6/12 rounded-lg">
         <div>
           <button type="button" onClick={close} className="cursor-pointer">
-            <IoIosCloseCircle />
+            <IoIosCloseCircle className="hover:fill-slate-400 text-2xl" />
           </button>
         </div>
         <h2 className="font-bold text-5xl">Enter Your Edit Details</h2>
@@ -27,9 +39,9 @@ export default function RequestForm({
           <FormGroup
             classStyle={"flex flex-row gap-4 w-full pb-4"}
             errorMessage={[
-              errors.AMName,
-              errors.CompanyID,
-              errors.CompanyName,
+              errors.data.AMName,
+              errors.data.CompanyID,
+              errors.data.CompanyName,
             ]}>
             <label htmlFor="AMName">Account Manager: </label>
             <input
@@ -37,7 +49,7 @@ export default function RequestForm({
               name="AMName"
               id="AMName"
               className="border-0 rounded-md w-1/5 border-slate-900"
-              defaultValue={defaultValues.AMName}
+              defaultValue={data.AMName}
             />
             <label htmlFor="CompanyID" className="z-0 absolute opacity-0">
               Company ID:{" "}
@@ -47,7 +59,7 @@ export default function RequestForm({
               name="CompanyID"
               id="CompanyID"
               className="border-0 rounded-md w-1/5 border-slate-900 z-0 absolute opacity-0"
-              defaultValue={defaultValues.CompanyID}
+              defaultValue={data.CompanyID}
             />
             <label htmlFor="CompanyName" className="z-0 absolute opacity-0">
               Company Name:{" "}
@@ -57,11 +69,11 @@ export default function RequestForm({
               name="CompanyName"
               id="CompanyName"
               className="border-0 rounded-md w-1/5 border-slate-900 z-0 absolute opacity-0"
-              defaultValue={defaultValues.CompanyName}
+              defaultValue={data.CompanyName}
             />
           </FormGroup>
           <FormGroup
-            errorMessage={[errors.FirstName, errors.LastName]}
+            errorMessage={[errors.data.FirstName, errors.data.LastName]}
             classStyle={"flex flex-row gap-4 w-full"}>
             <label htmlFor="FirstName">
               First Name:
@@ -70,7 +82,7 @@ export default function RequestForm({
                 name="FirstName"
                 id="FirstName"
                 className="border-1 rounded-md w-full border-slate-900"
-                defaultValue={defaultValues.FirstName}
+                defaultValue={data.FirstName}
               />
             </label>
             <label htmlFor="LastName">
@@ -80,11 +92,11 @@ export default function RequestForm({
                 name="LastName"
                 id="LastName"
                 className="border-1 rounded-md w-full border-slate-900"
-                defaultValue={defaultValues.LastName}
+                defaultValue={data.LastName}
               />
             </label>
           </FormGroup>
-          <FormGroup errorMessage={errors.details}>
+          <FormGroup errorMessage={errors.data.details}>
             <div className="flex flex-col gap-2">
               <label>Details: </label>
               <textarea
@@ -97,12 +109,15 @@ export default function RequestForm({
           </FormGroup>
         </div>
         <div className="form-btn-container flex flex-row gap-8 justify-between">
-          <button type="button" className="cursor-pointer" onClick={close}>
+          <button
+            type="button"
+            className="cursor-pointer hover:text-slate-400"
+            onClick={close}>
             Cancel
           </button>
           <button
             type="submit"
-            className="cursor-pointer"
+            className="cursor-pointer hover:text-slate-400"
             disabled={isSubmitting}>
             {isSubmitting ? "Loading" : "Save"}
           </button>

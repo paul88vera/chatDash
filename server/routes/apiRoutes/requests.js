@@ -33,13 +33,13 @@ router.get("/:id", (req, res) => {
 
 // POST a new request
 router.post("/", (req, res) => {
-  const { details, clientId, first, last, companyId, companyName, id } =
+  const { details, clientId, am, first, last, companyId, companyName, id } =
     req.body;
   const query =
-    "INSERT INTO Requests (Details, ClientID, FirstName, LastName, CompanyID, CompanyName) VALUES (?, ?, ?, ?, ?, ?)";
+    "INSERT INTO Requests (Details, ClientID, AMName, FirstName, LastName, CompanyID, CompanyName) VALUES (?, ?, ?, ?, ?, ?)";
   db.query(
     query,
-    [details, clientId, first, last, companyId, companyName, id],
+    [details, clientId, am, first, last, companyId, companyName, id],
     (err, result) => {
       if (err) {
         console.error(err);
