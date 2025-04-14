@@ -5,8 +5,14 @@ import Error from "./pages/Error";
 import Login from "./auth/Login";
 import Account from "./pages/Account";
 import ErrorMessage from "./pages/ErrorMessage";
-import { requestLoader } from "./loaders";
-import RequestLayout from "./layouts/RequestLayout";
+import Requests from "./pages/Requests.jsx";
+import {
+  action,
+  AllLoader,
+  // RequestLoader,
+  RequestSingleLoader,
+} from "./requestHandlers.js";
+import RequestItem from "./pages/RequestItem.jsx";
 
 export const router = createBrowserRouter([
   {
@@ -28,8 +34,15 @@ export const router = createBrowserRouter([
               },
               {
                 path: ":id/requests",
-                element: <RequestLayout />,
-                loader: requestLoader,
+                element: <Requests />,
+                loader: AllLoader,
+                action: action,
+              },
+              {
+                path: ":userId/requests/:id",
+                element: <RequestItem />,
+                loader: RequestSingleLoader,
+                action: action,
               },
             ],
           },

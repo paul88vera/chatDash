@@ -1,114 +1,89 @@
-// import { useLoaderData } from "react-router";
+import {
+  Link,
+  useActionData,
+  useLoaderData,
+  useNavigation,
+} from "react-router-dom";
+import { MdNoteAdd } from "react-icons/md";
+import { useState } from "react";
+import RequestForm from "../components/RequestForm";
+import { getAuth } from "firebase/auth";
 
 export default function Requests() {
-  // const { request } = useLoaderData();
+  const { request } = useLoaderData();
+  const [modal, setModal] = useState(false);
+  const errors = useActionData();
+  const { state } = useNavigation();
+  const isSubmitting = state === "submitting";
+  const auth = getAuth();
 
-  // const requestFilter = () => {}
-
-  //temp data
-  const request = {
-    pending: [
-      {
-        id: 0,
-        sub: "12",
-        details: "hello",
-        am: "am",
-        est: "12",
-      },
-      {
-        id: 1,
-        sub: "12",
-        details: "hello",
-        am: "am",
-        est: "12",
-      },
-    ],
+  const toggleRequestForm = () => {
+    setModal((current) => !current);
   };
 
-  console.log(
-    request.pending.map((item) => {
-      <div key={item.id}>
-        <span className="subDate">{item.sub}fd</span>
-        <span className="taskId">{item.id}fd</span>
-        <span className="taskDetails">{item.details}fd</span>
-        <span className="amInfo">{item.am}fd</span>
-        <span className="estTime">{item.est}fd</span>
-      </div>;
-    })
-  );
+  const options = {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  };
+
   return (
     <div>
-      <h1>Pending Requests</h1>
-      <div className="request_table">
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "space-between",
-            alignItems: "center",
-            flexWrap: "nowrap",
-            gap: "4rem",
-          }}>
-          <span className="subDate">Submission Date</span>
-          <span className="taskId">Task ID</span>
-          <span className="taskDetails">Details</span>
-          <span className="amInfo">Account Manager</span>
-          <span className="estTime">Estimated Completion Date</span>
+      <div className="p-4 md:p-8">
+        <div className="flex flex-row flew-nowrap justify-between pb-4">
+          <h1>Pending Requests</h1>
+          <button onClick={toggleRequestForm}>
+            <MdNoteAdd className="cursor-pointer text-2xl hover:fill-slate-400 transition ease-in-out" />
+          </button>
         </div>
-        <div>
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              justifyContent: "space-between",
-              alignItems: "center",
-              flexWrap: "nowrap",
-              gap: "4rem",
-            }}>
-            <span className="subDate">subfdas</span>
-            <span className="taskId">idfdsa</span>
-            <span className="taskDetails">detailsfdsa</span>
-            <span className="amInfo">amfda</span>
-            <span className="estTime">estfdsa</span>
+        {modal ? (
+          <RequestForm
+            close={toggleRequestForm}
+            isSubmitting={isSubmitting}
+            errors={errors}
+          />
+        ) : null}
+        <div className="request_table">
+          <div className="flex flex-row justify-between bg-purple-950 py-2 px-4 rounded-tl-md rounded-md gap-2">
+            <span className="subDate w-[10%]">Sub Date</span>
+            <span className="taskId  w-[10%] text-center">Entry ID</span>
+            <span className="taskDetails w-[60%]">Task Details</span>
+            <span className="amInfo w-[10%]">AM</span>
+            <span className="estTime w-[10%] text-end">Est Due</span>
           </div>
-
-          {request.pending.map((item) => {
-            <div key={item.id}>
-              <span className="subDate">{item.sub}fdas</span>
-              <span className="taskId">{item.id}fdsa</span>
-              <span className="taskDetails">{item.details}fdsa</span>
-              <span className="amInfo">{item.am}fda</span>
-              <span className="estTime">{item.est}fdsa</span>
-            </div>;
-          })}
-        </div>
-        <div>
           <div>
-            <span>© copyright</span>
+            {request.map((item, index) => {
+              return (
+                <Link
+                  to={`/account/${auth.currentUser.uid}/requests/${parseInt(
+                    item.RequestID,
+                    10
+                  )}`}
+                  key={index}
+                  className="flex flex-row justify-between bg-slate-850 py-2 px-4 gap-2 bg-slate-800 hover:bg-slate-900 border-b-1 my-2 rounded-md border-slate-400">
+                  <span className="subDate w-[10%]">
+                    {new Date(item.CreatedDate).toLocaleString(
+                      "en-US",
+                      options
+                    )}
+                  </span>
+                  <span className="taskId w-[10%] text-center">
+                    {item.RequestID}
+                  </span>
+                  <span className="taskDetails w-[60%]">{item.Details}</span>
+                  <span className="amInfo w-[10%]">{item.AMName}</span>
+                  <span className="estTime w-[10%] text-end">
+                    {new Date(item.CreatedDate).toLocaleString(
+                      "en-US",
+                      options
+                    )}
+                  </span>
+                </Link>
+              );
+            })}
           </div>
         </div>
       </div>
     </div>
   );
 }
-
-/**
- *
- * Submission Date
- * Task ID
- * Task Details
- * AM Contact Info
- * Estimated Time
- *
- */
-// function RequestContainer({ ...item, key }) {
-//   return (
-//     <div key={key}>
-//       <span className="subDate">{item.sub}</span>
-//       <span className="taskId">{item.id}</span>
-//       <span className="taskDetails">{item.details}</span>
-//       <span className="amInfo">{item.am}</span>
-//       <span className="estTime">{item.est}</span>
-//     </div>
-//   );
-// }

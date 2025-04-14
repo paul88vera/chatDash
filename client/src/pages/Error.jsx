@@ -1,10 +1,8 @@
 import { Link } from "react-router";
-import Nav from "../components/Nav";
 
 function Error() {
   return (
     <div>
-      <Nav />
       <div className="main-container">
         Error - 404
         <br />

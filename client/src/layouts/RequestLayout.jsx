@@ -1,14 +1,17 @@
-import { ScrollRestoration } from "react-router";
-import Nav from "../components/Nav";
+import { ScrollRestoration, useLoaderData } from "react-router";
 import Request from "../pages/Requests";
+import { useEffect } from "react";
 
 export default function RequestLayout() {
+  const request = useLoaderData();
+
+  useEffect(() => {}, []);
+
   return (
     <div id="Request-container">
-      <Nav />
       <ScrollRestoration />
       <div className="main-container">
-        <Request />
+        <Request request={request} />
       </div>
     </div>
   );

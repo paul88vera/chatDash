@@ -17,10 +17,10 @@ router.get("/", (req, res) => {
   });
 });
 
-// GET all requests from a specific client by id
+// GET Single request by id
 router.get("/:id", (req, res) => {
   const { id } = req.params;
-  const query = `SELECT * FROM Requests WHERE ClientID = ?`;
+  const query = `SELECT * FROM Requests WHERE RequestID = ?`;
   db.query(query, [id], (err, results) => {
     if (err) {
       console.error(err);
@@ -33,22 +33,23 @@ router.get("/:id", (req, res) => {
 
 // POST a new request
 router.post("/", (req, res) => {
-  const { details, clientId, first, last, companyId, companyName, id } =
-    req.body;
+  const { details, am, clientID } = req.body;
+
+  const clientIDNum = parseInt(clientID, 10);
+
   const query =
-    "INSERT INTO Requests (Details, ClientID, FirstName, LastName, CompanyID, CompanyName) VALUES (?, ?, ?, ?, ?, ?)";
-  db.query(
-    query,
-    [details, clientId, first, last, companyId, companyName, id],
-    (err, result) => {
-      if (err) {
-        console.error(err);
-        res.status(500).send("Server error on request");
-      } else {
-        res.status(201).send("Request added");
-      }
+    "INSERT INTO Requests (Details, AMName, ClientID) VALUES (?, ?, ?)";
+  db.query(query, [details, am, clientIDNum], (err, result) => {
+    if (err) {
+      console.error(err);
+      res.status(500).send("Server error on request");
+    } else {
+      res.status(201).json({
+        message: "Request added",
+        id: result.insertId, // ← this is the important part
+      });
     }
-  );
+  });
 });
 
 // PUT (update) a request
