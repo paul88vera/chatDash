@@ -14,7 +14,13 @@ export async function RequestSingleLoader({
   request: { signal },
   params: { id },
 }) {
-  return (await getRequest(id, { signal })) || [];
+  const requestId = parseInt(id, 10);
+  // quick number check
+  if (isNaN(requestId)) {
+    throw new Response("Invalid request ID", { status: 400 });
+  }
+
+  return (await getRequest(requestId, { signal })) || [];
 }
 
 // For Navigation Auth Check
@@ -36,19 +42,11 @@ export async function action({ request }) {
   const details = formData.get("Details");
   const clientID = parseInt(formData.get("ClientID"), 10);
   const am = formData.get("AMName");
-  // const firstName = formData.get("FirstName");
-  // const lastName = formData.get("LastName");
-  // const companyID = parseInt(formData.get("CompanyID"), 10);
-  // const companyName = formData.get("CompanyName");
 
   const errors = postFormValidator({
     details,
     clientID,
     am,
-    // companyID,
-    // firstName,
-    // lastName,
-    // companyName,
   });
 
   if (Object.keys(errors).length > 0) {
@@ -60,29 +58,14 @@ export async function action({ request }) {
       details,
       clientID: parseInt(clientID, 10),
       am,
-      // companyID: parseInt(companyID, 10),
-      // firstName,
-      // lastName,
-      // companyName,
     },
     { signal: request.signal }
   );
 
-  console.log("post: ", post);
-  return redirect(
-    `/account/${auth.currentUser.uid}/requests/${post.id}`
-  );
+  return redirect(`/account/${auth.currentUser.uid}/requests/${post.id}`);
 }
 
-export function postFormValidator({
-  details,
-  clientID,
-  am,
-  // companyID,
-  // firstName,
-  // lastName,
-  // companyName,
-}) {
+export function postFormValidator({ details, clientID, am }) {
   const errors = {};
 
   if (details === "") {
@@ -94,25 +77,9 @@ export function postFormValidator({
   if (!clientID || isNaN(parseInt(clientID))) {
     errors.clientID = "*Required and must be a number";
   }
-
   if (am === "") {
     errors.am = "*Required";
   }
-  // if (firstName === "") {
-  //   errors.firstName = "*Required";
-  // }
-  // if (lastName === "") {
-  //   errors.lastName = "*Required";
-  // }
-  // if (companyName === "") {
-  //   errors.companyName = "*Required";
-  // }
-  // if (companyID === "") {
-  //   errors.companyID = "*Required";
-  // }
-  // if (!companyID || isNaN(parseInt(companyID))) {
-  //   errors.companyID = "*Required and must be a number";
-  // }
 
   return errors;
 }

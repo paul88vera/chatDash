@@ -17,10 +17,10 @@ router.get("/", (req, res) => {
   });
 });
 
-// GET all requests from a specific client by id
+// GET Single request by id
 router.get("/:id", (req, res) => {
   const { id } = req.params;
-  const query = `SELECT * FROM Requests WHERE ClientID = ?`;
+  const query = `SELECT * FROM Requests WHERE RequestID = ?`;
   db.query(query, [id], (err, results) => {
     if (err) {
       console.error(err);

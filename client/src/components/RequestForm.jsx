@@ -4,12 +4,7 @@ import { Form, useLoaderData } from "react-router";
 import FormGroup from "./FormGroup";
 import { useEffect, useState } from "react";
 
-export default function RequestForm({
-  close,
-  isSubmitting,
-  errors = {},
-  // defaultValues = {},
-}) {
+export default function RequestForm({ close, isSubmitting, errors = {} }) {
   const { request, client } = useLoaderData();
   const clientData = client[0];
   const requestData = request[0];
@@ -20,6 +15,7 @@ export default function RequestForm({
     parseInt(clientData?.CompanyID, 10) ?? parseInt("", 10)
   );
 
+  // Check for Client or Request Data
   useEffect(() => {
     if (!clientData || !requestData) {
       console.log("no data");
@@ -85,50 +81,7 @@ export default function RequestForm({
                 setCompId(e.target.value);
               }}
             />
-            {/* <label htmlFor="CompanyName" className="hidden ">
-              Company Name:{" "}
-            </label>
-            <input
-              type="text"
-              name="CompanyName"
-              id="CompanyName"
-              className="border-0 rounded-md w-1/5 border-slate-900  hidden"
-              value={requestData.CompanyName}
-              onChange={(e) => {
-                e.target.value;
-              }}
-            /> */}
           </FormGroup>
-          {/* <FormGroup
-            errorMessage={[errors.FirstName, errors.LastName]}
-            classStyle={"flex flex-row gap-4 w-full hidden"}>
-            <label htmlFor="FirstName">
-              First Name:
-              <input
-                type="text"
-                name="FirstName"
-                id="FirstName"
-                className=""
-                value={requestData.FirstName}
-                onChange={(e) => {
-                  e.target.value;
-                }}
-              />
-            </label>
-            <label htmlFor="LastName">
-              Last Name:
-              <input
-                type="text"
-                name="LastName"
-                id="LastName"
-                className=""
-                onChange={(e) => {
-                  e.target.value;
-                }}
-                value={requestData.LastName}
-              />
-            </label>
-          </FormGroup> */}
           <FormGroup errorMessage={errors.details}>
             <div className="flex flex-col gap-2">
               <label>Details: </label>

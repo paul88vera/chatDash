@@ -10,7 +10,7 @@ import RequestForm from "../components/RequestForm";
 import { getAuth } from "firebase/auth";
 
 export default function Requests() {
-  const { request, client } = useLoaderData();
+  const { request } = useLoaderData();
   const [modal, setModal] = useState(false);
   const errors = useActionData();
   const { state } = useNavigation();
@@ -41,8 +41,6 @@ export default function Requests() {
             close={toggleRequestForm}
             isSubmitting={isSubmitting}
             errors={errors}
-            {...client}
-            {...request}
           />
         ) : null}
         <div className="request_table">
@@ -57,7 +55,10 @@ export default function Requests() {
             {request.map((item, index) => {
               return (
                 <Link
-                  to={`/account/${auth.currentUser.uid}/requests/${item.RequestID}`}
+                  to={`/account/${auth.currentUser.uid}/requests/${parseInt(
+                    item.RequestID,
+                    10
+                  )}`}
                   key={index}
                   className="flex flex-row justify-between bg-slate-850 py-2 px-4 gap-2 bg-slate-800 hover:bg-slate-900 border-b-1 my-2 rounded-md border-slate-400">
                   <span className="subDate w-[10%]">

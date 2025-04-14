@@ -39,7 +39,7 @@ export const router = createBrowserRouter([
                 action: action,
               },
               {
-                path: ":id/requests/:id",
+                path: ":userId/requests/:id",
                 element: <RequestItem />,
                 loader: RequestSingleLoader,
                 action: action,

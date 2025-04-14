@@ -23,13 +23,13 @@ export function addRequest(data, options) {
 
 // @route    PUT /requests/:id
 // @desc     Edit request by id
-// @access   Private - Public For Now
+// @access   Private
 export function updateRequest(id, data, options) {
   return baseApi.put(`/requests/${id}`, data, options).then((res) => res.data);
 }
 // @route    DELETE /requests/:id
 // @desc     Delete request by id
-// @access   Private - Public For Now
+// @access   Private
 export function deleteRequest(id) {
   return baseApi.delete(`/requests/${id}`, { method: "DELETE" }).then(() => {
     window.location.replace("/dashboard");
