@@ -55,10 +55,13 @@ const ChatRoom = ({ close }) => {
 
   return createPortal(
     <div id="chatbox-container">
-      <button className="close-btn" onClick={close}>
-        <FaMinus />
+      <button
+        type="button"
+        className="flex flex-col p-1 align-middle justify-center "
+        onClick={close}>
+        <FaMinus className="" />
       </button>
-      <div className=" chat">
+      <div className="chat">
         {messages.map((msg) => {
           // Determines if the message was sent or received
           const messageClass =
@@ -85,9 +88,10 @@ const ChatRoom = ({ close }) => {
               sendMessage();
             }
           }}
-          className="border p-2"
+          className="border p-2 text-white"
         />
         <button
+          type="submit"
           onClick={sendMessage}
           className="bg-green-500 px-4 py-2 text-white">
           <IoPaperPlaneSharp />
